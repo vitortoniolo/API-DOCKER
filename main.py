@@ -3,11 +3,10 @@ from models import ProductCreate, ProductRead, ProductUpdate
 from sqlalchemy.orm import Session
 from database import SessionLocal, engine, Base, get_db
 import crud
-from typing import List  # Certificando que o import está presente
+from typing import List
 
 app = FastAPI()
 
-# Cria as tabelas no banco de dados
 Base.metadata.create_all(bind=engine)
 
 @app.post("/products/", response_model=ProductRead)
