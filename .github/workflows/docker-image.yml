@@ -18,7 +18,7 @@ jobs:
     
     - name: Set up date tag
       id: date_tag
-      run: echo "DATE_TAG=$(date +%d-%m-%H:%M)" >> $GITHUB_ENV
+      run: echo "DATE_TAG=$(date +%d-%m-%H.%M)" >> $GITHUB_ENV
       
     - name: Login into Dockerhub
       run: echo "${{ secrets.DOCKER_PWD }}" | docker login -u "${{ secrets.DOCKER_USR }}" --password-stdin
