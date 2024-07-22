@@ -24,7 +24,7 @@ jobs:
       run: echo "${{ secrets.DOCKER_PWD }}" | docker login -u "${{ secrets.DOCKER_USR }}" --password-stdin
       
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag vitortoniolo:${{ env.DATE_TAG }}
+      run: docker build . --file Dockerfile --tag vitortoniolo/crud_db_2:${{ env.DATE_TAG }}
 
     - name: Push image to Dockerhub
       run: |
