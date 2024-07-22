@@ -16,11 +16,19 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
+    - name: Set up date tag
+      id: date_tag
+      run: echo "DATE_TAG=$(date +%d-%m-%H:%M)" >> $GITHUB_ENV
+      
     - name: Login into Dockerhub
-      run: echo "${{ secrets.DOCKER_PASSWD }}" | docker login -u "${{ secrets.DOCKER_USER }}" --password-stdin
+      run: echo "${{ secrets.DOCKER_PWD }}" | docker login -u "${{ secrets.DOCKER_USR }}" --password-stdin
       
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag vitortoniolo:$(date +%d-%m-%H:%M)
+      run: docker build . --file Dockerfile --tag vitortoniolo:${{ env.DATE_TAG }}
+
+    - name: Push image to Dockerhub
+      run: |
+        docker push vitortoniolo/${{ env.DATE_TAG }}
       
     
     
