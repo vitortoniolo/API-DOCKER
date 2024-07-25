@@ -1,4 +1,5 @@
 import os
+import time
 from sqlalchemy import create_engine, Column, Integer, String, Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -15,6 +16,18 @@ POSTGRES_PORT = os.getenv("POSTGRES_PORT", 5432)
 SQLALCHEMY_DATABASE_URL = (
     f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}"
 )
+
+def wait_for_db():
+    max_tries = 10
+    for i in range(max_tries):
+        try:
+            engine = create_engine(SQLALCHEMY_DATABASE_URL)
+            engine.connect()
+            print("Database connection successful!")
+            break
+        except Exception as e:
+            print(f"Attempt {i+1}/{max_tries} failed: {e}")
+            time.sleep(5)
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
