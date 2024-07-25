@@ -24,7 +24,7 @@ jobs:
 
     - name: Push image to Dockerhub
       run: |
-        docker push vitortoniolo/crud_db_2:${{ env.DATE_TAG }}
+        docker push vitortoniolo/crud_db_2:latest
       
     
     
