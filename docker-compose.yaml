@@ -1,14 +1,12 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json
-
 version: '3.9'
 
 services:
   db:
     image: postgres:14-alpine
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: testdb
     volumes:
       - pgdata:/var/lib/postgresql/data
     networks:
@@ -21,7 +19,7 @@ services:
     depends_on:
       - db
     environment:
-      - DATABASE_URL=${DATABASE_URL}
+      DATABASE_URL: postgresql://postgres:123@db:5432/testdb
     ports:
       - "8000:80"
     networks:

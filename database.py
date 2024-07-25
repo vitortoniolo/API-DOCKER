@@ -10,7 +10,7 @@ load_dotenv()
 POSTGRES_USER = os.getenv("POSTGRES_USER")
 POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD")
 POSTGRES_DB = os.getenv("POSTGRES_DB")
-POSTGRES_HOST = os.getenv("POSTGRES_HOST", "localhost")
+POSTGRES_HOST = os.getenv("POSTGRES_HOST", "db")  # Default to 'db' if not set
 POSTGRES_PORT = os.getenv("POSTGRES_PORT", 5432)
 
 SQLALCHEMY_DATABASE_URL = (
@@ -28,6 +28,8 @@ def wait_for_db():
         except Exception as e:
             print(f"Attempt {i+1}/{max_tries} failed: {e}")
             time.sleep(5)
+
+wait_for_db()  # Call this before creating the engine
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
