@@ -1,10 +1,6 @@
 name: Docker Image Deploy
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
@@ -24,7 +20,7 @@ jobs:
       run: echo "${{ secrets.DOCKER_PWD }}" | docker login -u "${{ secrets.DOCKER_USR }}" --password-stdin
       
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag vitortoniolo/crud_db_2:${{ env.DATE_TAG }}
+      run: docker build . --file Dockerfile --tag vitortoniolo/crud_db_2:latest
 
     - name: Push image to Dockerhub
       run: |
